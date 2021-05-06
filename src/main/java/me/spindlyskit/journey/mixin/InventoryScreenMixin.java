@@ -55,14 +55,8 @@ public abstract class InventoryScreenMixin extends AbstractInventoryScreen<Playe
     }
 
     @Inject(at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/screen/ingame/InventoryScreen;drawMouseoverTooltip(Lnet/minecraft/client/util/math/MatrixStack;II)V"), method = "render")
-    private void render(MatrixStack matrices, int mouseX, int mouseY, float delta, CallbackInfo ci) {
+    private void renderPowersMenu(MatrixStack matrices, int mouseX, int mouseY, float delta, CallbackInfo ci) {
         powersMenuWidget.render(matrices, mouseX, mouseY, delta);
-    }
-
-    @Redirect(at = @At(value = "INVOKE", target = "net/minecraft/client/gui/screen/ingame/InventoryScreen.addButton(Lnet/minecraft/client/gui/widget/AbstractButtonWidget;)Lnet/minecraft/client/gui/widget/AbstractButtonWidget;"), method = "init()V")
-    private AbstractButtonWidget captureRecipeButton(InventoryScreen inventoryScreen, AbstractButtonWidget button) {
-        recipeBookButton = (TexturedButtonWidget) button;
-        return addButton(button);
     }
 
     @SuppressWarnings("UnresolvedMixinReference")
@@ -80,8 +74,14 @@ public abstract class InventoryScreenMixin extends AbstractInventoryScreen<Playe
         }
     }
 
+    @Redirect(at = @At(value = "INVOKE", target = "net/minecraft/client/gui/screen/ingame/InventoryScreen.addButton(Lnet/minecraft/client/gui/widget/AbstractButtonWidget;)Lnet/minecraft/client/gui/widget/AbstractButtonWidget;"), method = "init()V")
+    private AbstractButtonWidget captureRecipeButton(InventoryScreen inventoryScreen, AbstractButtonWidget button) {
+        recipeBookButton = (TexturedButtonWidget) button;
+        return addButton(button);
+    }
+
     @Redirect(at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/screen/recipebook/RecipeBookWidget;isOpen()Z"), method = "render")
-    private boolean isWidgetOpen(RecipeBookWidget recipeBookWidget) {
+    private boolean dontDrawStatuesWhenWidgetOpen(RecipeBookWidget recipeBookWidget) {
         return powersMenuWidget.isOpen() || recipeBookWidget.isOpen();
     }
 
