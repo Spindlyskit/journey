@@ -29,7 +29,7 @@ public class PowersMenuWidget extends DrawableHelper implements Drawable {
             RenderSystem.pushMatrix();
             RenderSystem.translatef(0.0f, 0.0f, 100.0f);
             this.client.getTextureManager().bindTexture(TEXTURE);
-            int x = (this.parentWidth - 46) / 2 - 114;
+            int x = (this.parentWidth) / 2 - 90;
             int y = (this.parentHeight - 166) / 2;
             drawTexture(matrices, x, y, 1, 1, 46, 147);
             RenderSystem.popMatrix();
