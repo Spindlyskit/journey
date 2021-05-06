@@ -10,7 +10,7 @@ import net.minecraft.util.Identifier;
  * Button to toggle access to the journey mode powers window
  */
 public class PowersMenuButton extends TexturedButtonWidget {
-    private static final Identifier TEXTURE = new Identifier("journey", "textures/gui/power_menu_button.png");
+    private static final Identifier TEXTURE = new Identifier("journey", "textures/gui/powers_menu_button.png");
     private static final int X_OFFSET = 126;
     private static final int Y_OFFSET = -22;
     private static final int WIDTH = 20;
