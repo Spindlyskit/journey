@@ -26,6 +26,7 @@ public class PowersMenuWidget extends DrawableHelper implements Drawable {
     private int y;
     private boolean open = false;
     private final List<PowersMenuGroup> groups = Lists.newArrayList();
+    private int focusedGroup = 0;
 
     public void initialize(int parentWidth, int parentHeight, MinecraftClient client) {
         this.client = client;
@@ -39,7 +40,9 @@ public class PowersMenuWidget extends DrawableHelper implements Drawable {
         // if initialize is called while groups exist (eg. a resize occurred) simply move the old buttons
         if (groups.isEmpty()) {
             for (int i = 0; i < 3; i++) {
-                groups.add(new PowersMenuGroup(baseX, baseY, i, i == 0));
+                PowersMenuGroup group = new PowersMenuGroup(baseX, baseY, i, i == 0);
+                group.addButtons(baseX + 41, y + 11);
+                groups.add(group);
             }
         } else {
             for (PowersMenuGroup group : groups) {
@@ -59,6 +62,10 @@ public class PowersMenuWidget extends DrawableHelper implements Drawable {
 
             for (PowersMenuGroup group : groups) {
                 group.render(matrices, mouseX, mouseY, delta);
+
+                if (group.isToggled()) {
+                    group.buttons.forEach((button) -> button.render(matrices, mouseX, mouseY, delta));
+                }
             }
 
             RenderSystem.popMatrix();
@@ -69,7 +76,12 @@ public class PowersMenuWidget extends DrawableHelper implements Drawable {
         if (isOpen()) {
             for (PowersMenuGroup group : groups) {
                 if (group.mouseClicked(mouseX, mouseY, button)) {
-                    group.setToggled(!group.isToggled());
+                    if (group.index != focusedGroup) {
+                        group.setToggled(true);
+                        groups.get(focusedGroup).setToggled(false);
+                        focusedGroup = group.index;
+                    }
+
                     return true;
                 }
             }
