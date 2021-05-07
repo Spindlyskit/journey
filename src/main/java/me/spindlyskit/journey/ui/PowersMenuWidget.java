@@ -12,6 +12,9 @@ import net.minecraft.util.Identifier;
 @Environment(EnvType.CLIENT)
 public class PowersMenuWidget extends DrawableHelper implements Drawable {
     protected static final Identifier TEXTURE = new Identifier("journey", "textures/gui/powers_menu.png");
+    public static final int WIDTH = 46;
+    public static final int HEIGHT = 147;
+    private static final int INVENTORY_HEIGHT = 166;
     protected MinecraftClient client;
     private int parentWidth;
     private int parentHeight;
@@ -30,8 +33,8 @@ public class PowersMenuWidget extends DrawableHelper implements Drawable {
             RenderSystem.translatef(0.0f, 0.0f, 100.0f);
             this.client.getTextureManager().bindTexture(TEXTURE);
             int x = (this.parentWidth) / 2 - 90;
-            int y = (this.parentHeight - 166) / 2;
-            drawTexture(matrices, x, y, 1, 1, 46, 147);
+            int y = (this.parentHeight - HEIGHT - (INVENTORY_HEIGHT - HEIGHT)) / 2;
+            drawTexture(matrices, x, y, 1, 1, WIDTH, HEIGHT);
             RenderSystem.popMatrix();
         }
     }

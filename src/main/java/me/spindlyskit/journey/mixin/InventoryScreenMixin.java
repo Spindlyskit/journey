@@ -63,10 +63,13 @@ public abstract class InventoryScreenMixin extends AbstractInventoryScreen<Playe
         powersMenuWidget.render(matrices, mouseX, mouseY, delta);
     }
 
-    @SuppressWarnings("UnresolvedMixinReference")
+    /**
+     * Close the powers menu widget and move the button when the recipe book is opened
+     */
     // This hooks into the synthetic function called when the recipe button is pressed
     // It uses the method name from the bytecode and will require updating each minecraft version
     // There is probably a better approach here
+    @SuppressWarnings("UnresolvedMixinReference")
     @Inject(at = @At("TAIL"), method = "method_19891(Lnet/minecraft/client/gui/widget/ButtonWidget;)V")
     private void onRecipeBookOpen(ButtonWidget b, CallbackInfo ci) {
         if (powersMenuButton != null) {
@@ -84,14 +87,17 @@ public abstract class InventoryScreenMixin extends AbstractInventoryScreen<Playe
         return addButton(button);
     }
 
+    /**
+     * Used to decided whether to draw status effects to the left of the inventory
+     */
     @Redirect(at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/screen/recipebook/RecipeBookWidget;isOpen()Z"), method = "render")
-    private boolean dontDrawStatuesWhenWidgetOpen(RecipeBookWidget recipeBookWidget) {
+    private boolean dontDrawStatusesWhenWidgetOpen(RecipeBookWidget recipeBookWidget) {
         return powersMenuWidget.isOpen() || recipeBookWidget.isOpen();
     }
 
     protected int findWidgetLeftEdge() {
         if (powersMenuWidget.isOpen()) {
-            return 46 + (width - backgroundWidth) / 2;
+            return PowersMenuWidget.WIDTH + (width - backgroundWidth) / 2;
         }
 
         return recipeBook.findLeftEdge(narrow, width, backgroundWidth);
