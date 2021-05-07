@@ -34,8 +34,17 @@ public class PowersMenuWidget extends DrawableHelper implements Drawable {
 
         int baseX = x - PowersMenuGroup.WIDTH + 5;
         int baseY = y + 3;
-        for (int i = 0; i < 3; i++) {
-            this.groups.add(new PowersMenuGroup(baseX, baseY, i, i == 0));
+
+        // Create groups if they don't already exist
+        // if initialize is called while groups exist (eg. a resize occurred) simply move the old buttons
+        if (groups.isEmpty()) {
+            for (int i = 0; i < 3; i++) {
+                groups.add(new PowersMenuGroup(baseX, baseY, i, i == 0));
+            }
+        } else {
+            for (PowersMenuGroup group : groups) {
+                group.setPos(baseX, baseY);
+            }
         }
     }
 
