@@ -2,6 +2,7 @@ package me.spindlyskit.journey.ui;
 
 import com.google.common.collect.Lists;
 import com.mojang.blaze3d.systems.RenderSystem;
+import me.spindlyskit.journey.ui.powergroups.PersonalPowersGroup;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
@@ -25,7 +26,7 @@ public class PowersMenuWidget extends DrawableHelper implements Drawable {
     private int x;
     private int y;
     private boolean open = false;
-    private final List<PowersMenuGroup> groups = Lists.newArrayList();
+    private final List<PowerGroup> groups = Lists.newArrayList();
     private int focusedGroup = 0;
 
     public void initialize(int parentWidth, int parentHeight, MinecraftClient client) {
@@ -33,19 +34,25 @@ public class PowersMenuWidget extends DrawableHelper implements Drawable {
         x = (parentWidth) / 2 - 90;
         y = (parentHeight - HEIGHT - (INVENTORY_HEIGHT - HEIGHT)) / 2;
 
-        int baseX = x - PowersMenuGroup.WIDTH + 5;
+        int baseX = x - PowerGroup.WIDTH + 5;
         int baseY = y + 3;
 
         // Create groups if they don't already exist
         // if initialize is called while groups exist (eg. a resize occurred) simply move the old buttons
         if (groups.isEmpty()) {
-            for (int i = 0; i < 3; i++) {
-                PowersMenuGroup group = new PowersMenuGroup(baseX, baseY, i, i == 0);
+            {
+                PowerGroup group = new PersonalPowersGroup(baseX, baseY, 0, true);
+                group.addButtons(baseX + 41, y + 11);
+                groups.add(group);
+            }
+
+            for (int i = 1; i < 3; i++) {
+                PowerGroup group = new PowerGroup(baseX, baseY, i, false);
                 group.addButtons(baseX + 41, y + 11);
                 groups.add(group);
             }
         } else {
-            for (PowersMenuGroup group : groups) {
+            for (PowerGroup group : groups) {
                 group.setPos(baseX, baseY);
             }
         }
@@ -60,7 +67,7 @@ public class PowersMenuWidget extends DrawableHelper implements Drawable {
 
             drawTexture(matrices, x, y, MENU_U_OFFSET, MENU_V_OFFSET, WIDTH, HEIGHT);
 
-            for (PowersMenuGroup group : groups) {
+            for (PowerGroup group : groups) {
                 group.render(matrices, mouseX, mouseY, delta);
 
                 if (group.isToggled()) {
@@ -74,7 +81,7 @@ public class PowersMenuWidget extends DrawableHelper implements Drawable {
 
     public boolean mouseClicked(double mouseX, double mouseY, int button) {
         if (isOpen()) {
-            for (PowersMenuGroup group : groups) {
+            for (PowerGroup group : groups) {
                 if (group.mouseClicked(mouseX, mouseY, button)) {
                     if (group.index != focusedGroup) {
                         group.setToggled(true);
