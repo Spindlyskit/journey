@@ -21,6 +21,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Environment(EnvType.CLIENT)
 @Mixin(InventoryScreen.class)
@@ -93,6 +94,16 @@ public abstract class InventoryScreenMixin extends AbstractInventoryScreen<Playe
     @Redirect(at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/screen/recipebook/RecipeBookWidget;isOpen()Z"), method = "render")
     private boolean dontDrawStatusesWhenWidgetOpen(RecipeBookWidget recipeBookWidget) {
         return powersMenuWidget.isOpen() || recipeBookWidget.isOpen();
+    }
+
+    /**
+     * Handle clicking on powers menu
+     */
+    @Inject(at = @At("TAIL"), method = "mouseClicked", cancellable = true)
+    private void mouseClicked(double mouseX, double mouseY, int button, CallbackInfoReturnable<Boolean> ci) {
+        if (powersMenuWidget.isOpen() && powersMenuWidget.mouseClicked(mouseX, mouseY, button)) {
+            ci.setReturnValue(true);
+        }
     }
 
     protected int findWidgetLeftEdge() {

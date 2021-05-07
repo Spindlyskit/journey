@@ -65,6 +65,19 @@ public class PowersMenuWidget extends DrawableHelper implements Drawable {
         }
     }
 
+    public boolean mouseClicked(double mouseX, double mouseY, int button) {
+        if (isOpen()) {
+            for (PowersMenuGroup group : groups) {
+                if (group.mouseClicked(mouseX, mouseY, button)) {
+                    group.setToggled(!group.isToggled());
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
     public void toggleOpen() {
         open = !open;
     }
