@@ -9,8 +9,9 @@ public class PersonalPowersGroup extends PowerGroup {
         super(baseX, baseY, index, toggled);
     }
 
-    protected void addButtons(int x, int y) {
-        addButton(x, y, new ToggleablePowerTest());
-        addButton(x, y, new PowerTest());
+    @Override
+    protected void addButtons() {
+        addButton(new ToggleablePowerTest());
+        addButton(new PowerTest());
     }
 }
