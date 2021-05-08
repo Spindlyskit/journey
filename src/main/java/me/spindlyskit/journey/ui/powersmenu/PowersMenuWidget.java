@@ -5,6 +5,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import me.spindlyskit.journey.access.PlayerEntityAccess;
 import me.spindlyskit.journey.ui.powersmenu.powergroups.PersonalPowersGroup;
 import me.spindlyskit.journey.ui.powersmenu.powergroups.TimePowersGroup;
+import me.spindlyskit.journey.ui.powersmenu.powergroups.WeatherPowersGroup;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
@@ -44,7 +45,7 @@ public class PowersMenuWidget extends DrawableHelper implements Drawable {
         if (groups.isEmpty()) {
             addGroup(new PersonalPowersGroup(baseX, baseY, 0));
             addGroup(new TimePowersGroup(baseX, baseY, 1));
-            addGroup(new PowerGroup(baseX, baseY, 2));
+            addGroup(new WeatherPowersGroup(baseX, baseY, 2));
 
             groups.get(options.getTab()).setToggled(true);
         } else {

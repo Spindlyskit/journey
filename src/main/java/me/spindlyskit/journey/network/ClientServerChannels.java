@@ -4,6 +4,7 @@ import net.minecraft.util.Identifier;
 
 public final class ClientServerChannels {
     public static final Identifier SET_TIME = new Identifier("journey", "set_time");
+    public static final Identifier SET_WEATHER = new Identifier("journey", "set_weather");
     public static final Identifier SET_GOD_MODE = new Identifier("journey", "set_god_mode");
     public static final Identifier SET_NO_HUNGER = new Identifier("journey", "set_no_hunger");
 

@@ -1,10 +1,13 @@
 package me.spindlyskit.journey.network;
 
 import me.spindlyskit.journey.access.PlayerEntityAccess;
+import me.spindlyskit.journey.powers.WeatherSetPower;
 import me.spindlyskit.journey.ui.powersmenu.PowersMenuOptions;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.world.ServerWorld;
+
+import java.util.concurrent.ThreadLocalRandom;
 
 public final class ServerPacketRegistry {
     public static void init() {
@@ -20,6 +23,27 @@ public final class ServerPacketRegistry {
                 }
             });
         }));
+
+        ServerPlayNetworking.registerGlobalReceiver(ClientServerChannels.SET_WEATHER, (((server, player, handler, buf, responseSender) -> {
+            WeatherSetPower.WEATHER_TYPE weatherType = buf.readEnumConstant(WeatherSetPower.WEATHER_TYPE.class);
+
+            server.execute(() -> {
+                int duration = ThreadLocalRandom.current().nextInt(5000, 11000);
+                ServerWorld overworld = server.getOverworld();
+
+                switch (weatherType) {
+                    case Clear:
+                        overworld.setWeather(duration, 0, false, false);
+                        break;
+                    case Rain:
+                        overworld.setWeather(0, duration, true, false);
+                        break;
+                    case Thunder:
+                        overworld.setWeather(0, duration, true, true);
+                        break;
+                }
+            });
+        })));
 
         ServerPlayNetworking.registerGlobalReceiver(ClientServerChannels.SET_GOD_MODE, (((server, player, handler, buf, responseSender) -> {
             ((PlayerEntityAccess) player).getPowersMenuOptions().setGodmode(buf.readBoolean());

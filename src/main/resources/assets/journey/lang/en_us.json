@@ -8,5 +8,9 @@
   "power.day.name": "Set Time to Dawn",
   "power.noon.name": "Set Time to Noon",
   "power.night.name": "Set Time to Dusk",
-  "power.midnight.name": "Set Time to Midnight"
+  "power.midnight.name": "Set Time to Midnight",
+
+  "power.clear.name": "Switch to Clear Weather",
+  "power.rain.name": "Switch to Rainy Weather",
+  "power.thunder.name": "Start a Thunderstorm"
 }
