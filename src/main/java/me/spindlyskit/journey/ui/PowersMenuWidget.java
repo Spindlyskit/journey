@@ -3,6 +3,7 @@ package me.spindlyskit.journey.ui;
 import com.google.common.collect.Lists;
 import com.mojang.blaze3d.systems.RenderSystem;
 import me.spindlyskit.journey.ui.powergroups.PersonalPowersGroup;
+import me.spindlyskit.journey.ui.powergroups.TimePowersGroup;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
@@ -40,17 +41,9 @@ public class PowersMenuWidget extends DrawableHelper implements Drawable {
         // Create groups if they don't already exist
         // if initialize is called while groups exist (eg. a resize occurred) simply move the old buttons
         if (groups.isEmpty()) {
-            {
-                PowerGroup group = new PersonalPowersGroup(baseX, baseY, 0, true);
-                group.addButtons(baseX, baseY);
-                groups.add(group);
-            }
-
-            for (int i = 1; i < 3; i++) {
-                PowerGroup group = new PowerGroup(baseX, baseY, i, false);
-                group.addButtons(baseX, baseY);
-                groups.add(group);
-            }
+            addGroup(new PersonalPowersGroup(baseX, baseY, 0, true), baseX, baseY);
+            addGroup(new TimePowersGroup(baseX, baseY, 1, false), baseX, baseY);
+            addGroup(new PowerGroup(baseX, baseY, 2, false), baseX, baseY);
         } else {
             for (PowerGroup group : groups) {
                 group.setPos(baseX, baseY);
@@ -103,5 +96,10 @@ public class PowersMenuWidget extends DrawableHelper implements Drawable {
 
     public boolean isOpen() {
         return open;
+    }
+
+    private void addGroup(PowerGroup group, int baseX, int baseY) {
+        group.addButtons();
+        groups.add(group);
     }
 }

@@ -14,6 +14,10 @@ public class PowerGroup extends ToggleButtonWidget {
     protected static final int WIDTH = 35;
     protected static final int HEIGHT = 26;
     protected final int index;
+    // X and Y coordinates of the top left of the first tab button before modifications
+    protected final int baseX;
+    protected final int baseY;
+
     private static final int BUTTON_X_OFFSET = 41;
     private static final int BUTTON_Y_OFFSET = 8;
     protected final List<PowerButton> buttons = Lists.newArrayList();
@@ -23,6 +27,8 @@ public class PowerGroup extends ToggleButtonWidget {
         super(baseX, baseY + (index * (HEIGHT + 1)), WIDTH, HEIGHT, toggled);
         setTextureUV(52, 2, 35, 0, PowersMenuWidget.TEXTURE);
         this.index = index;
+        this.baseX = baseX;
+        this.baseY = baseY;
 
         if (toggled) {
             x -= 2;
@@ -70,12 +76,12 @@ public class PowerGroup extends ToggleButtonWidget {
     /**
      * Create a new power toggle button
      */
-    protected void addButton(int x, int y, Power power) {
+    protected void addButton(Power power) {
         int i = buttons.size();
-        buttons.add(new PowerButton(x + BUTTON_X_OFFSET, y + (i * (PowerButton.BUTTON_SIZE + 2)) + BUTTON_Y_OFFSET,
+        buttons.add(new PowerButton(baseX + BUTTON_X_OFFSET, baseY + (i * (PowerButton.BUTTON_SIZE + 2)) + BUTTON_Y_OFFSET,
                 false, power));
     }
 
-    protected void addButtons(int x, int y) {
+    protected void addButtons() {
     }
 }
