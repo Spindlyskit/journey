@@ -1,9 +1,9 @@
-package me.spindlyskit.journey.ui;
+package me.spindlyskit.journey.ui.powersmenu;
 
 import com.google.common.collect.Lists;
 import com.mojang.blaze3d.systems.RenderSystem;
-import me.spindlyskit.journey.ui.powergroups.PersonalPowersGroup;
-import me.spindlyskit.journey.ui.powergroups.TimePowersGroup;
+import me.spindlyskit.journey.ui.powersmenu.powergroups.PersonalPowersGroup;
+import me.spindlyskit.journey.ui.powersmenu.powergroups.TimePowersGroup;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;

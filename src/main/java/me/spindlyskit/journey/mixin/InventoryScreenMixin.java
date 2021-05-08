@@ -1,7 +1,7 @@
 package me.spindlyskit.journey.mixin;
 
-import me.spindlyskit.journey.ui.PowersMenuButton;
-import me.spindlyskit.journey.ui.PowersMenuWidget;
+import me.spindlyskit.journey.ui.powersmenu.PowersMenuButton;
+import me.spindlyskit.journey.ui.powersmenu.PowersMenuWidget;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.gui.screen.ingame.AbstractInventoryScreen;

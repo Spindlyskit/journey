@@ -1,4 +1,4 @@
-package me.spindlyskit.journey.ui;
+package me.spindlyskit.journey.ui.powersmenu;
 
 import me.spindlyskit.journey.powers.Power;
 import net.fabricmc.api.EnvType;

@@ -1,4 +1,4 @@
-package me.spindlyskit.journey.ui;
+package me.spindlyskit.journey.ui.powersmenu;
 
 import com.google.common.collect.Lists;
 import me.spindlyskit.journey.powers.Power;

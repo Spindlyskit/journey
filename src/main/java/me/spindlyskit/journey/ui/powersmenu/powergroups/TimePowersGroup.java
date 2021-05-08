@@ -1,7 +1,7 @@
-package me.spindlyskit.journey.ui.powergroups;
+package me.spindlyskit.journey.ui.powersmenu.powergroups;
 
 import me.spindlyskit.journey.powers.TimeSetPower;
-import me.spindlyskit.journey.ui.PowerGroup;
+import me.spindlyskit.journey.ui.powersmenu.PowerGroup;
 
 public class TimePowersGroup extends PowerGroup {
     public TimePowersGroup(int baseX, int baseY, int index, boolean toggled) {

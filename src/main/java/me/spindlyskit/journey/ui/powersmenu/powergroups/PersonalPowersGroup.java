@@ -1,8 +1,8 @@
-package me.spindlyskit.journey.ui.powergroups;
+package me.spindlyskit.journey.ui.powersmenu.powergroups;
 
 import me.spindlyskit.journey.powers.PowerTest;
 import me.spindlyskit.journey.powers.ToggleablePowerTest;
-import me.spindlyskit.journey.ui.PowerGroup;
+import me.spindlyskit.journey.ui.powersmenu.PowerGroup;
 
 public class PersonalPowersGroup extends PowerGroup {
     public PersonalPowersGroup(int baseX, int baseY, int index, boolean toggled) {
