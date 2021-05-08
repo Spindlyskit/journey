@@ -11,12 +11,12 @@ public class TimePowersGroup extends PowerGroup {
     @Override
     protected void addButtons() {
         // Day
-        addButton(new TimeSetPower(1000));
+        addButton(new TimeSetPower(1000, "day"));
         // Noon
-        addButton(new TimeSetPower(6000));
+        addButton(new TimeSetPower(6000, "noon"));
         // Night
-        addButton(new TimeSetPower(13000));
+        addButton(new TimeSetPower(13000, "night"));
         // Midnight
-        addButton(new TimeSetPower(18000));
+        addButton(new TimeSetPower(18000, "midnight"));
     }
 }

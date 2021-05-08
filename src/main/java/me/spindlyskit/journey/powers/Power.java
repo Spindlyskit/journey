@@ -30,4 +30,9 @@ public abstract class Power {
      * Get the v offset of the power icon texture (should be multiplied by 16 to find the icon)
      */
     public int getTextureV() { return 0; }
+
+    /**
+     * Get the powers non translated name
+     */
+    public String getName() { return "unnamed"; }
 }

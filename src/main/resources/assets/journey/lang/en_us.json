@@ -1,2 +1,7 @@
 {
+  "power.unnamed.name": "Unnamed power",
+  "power.day.name": "Set time to dawn",
+  "power.noon.name": "Set time to noon",
+  "power.night.name": "Set time to dusk",
+  "power.midnight.name": "Set time to midnight"
 }

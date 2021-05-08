@@ -8,10 +8,12 @@ import net.minecraft.network.PacketByteBuf;
 
 public class TimeSetPower extends Power {
     private final int targetTime;
+    private final String name;
 
-    public TimeSetPower(int time) {
+    public TimeSetPower(int time, String name) {
         super();
-        targetTime = time;
+        this.targetTime = time;
+        this.name = name;
     }
 
     @Override
@@ -29,5 +31,10 @@ public class TimeSetPower extends Power {
     @Override
     public int getTextureV() {
         return 1;
+    }
+
+    @Override
+    public String getName() {
+        return name;
     }
 }
