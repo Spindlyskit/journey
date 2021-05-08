@@ -16,6 +16,7 @@ public class JourneyMod implements ModInitializer {
         // Initialize client -> server packets
         ServerPacketRegistry.init();
 
+        // Send powers menu state from server nbt to client
         ServerPlayConnectionEvents.JOIN.register(((handler, sender, server) -> {
             PacketByteBuf buf = PacketByteBufs.create();
             CompoundTag tag = new CompoundTag();

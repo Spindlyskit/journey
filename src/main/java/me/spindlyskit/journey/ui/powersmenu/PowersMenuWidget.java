@@ -42,9 +42,9 @@ public class PowersMenuWidget extends DrawableHelper implements Drawable {
         // Create groups if they don't already exist
         // if initialize is called while groups exist (eg. a resize occurred) simply move the old buttons
         if (groups.isEmpty()) {
-            addGroup(new PersonalPowersGroup(baseX, baseY, 0), baseX, baseY);
-            addGroup(new TimePowersGroup(baseX, baseY, 1), baseX, baseY);
-            addGroup(new PowerGroup(baseX, baseY, 2), baseX, baseY);
+            addGroup(new PersonalPowersGroup(baseX, baseY, 0));
+            addGroup(new TimePowersGroup(baseX, baseY, 1));
+            addGroup(new PowerGroup(baseX, baseY, 2));
 
             groups.get(options.getTab()).setToggled(true);
         } else {
@@ -103,7 +103,7 @@ public class PowersMenuWidget extends DrawableHelper implements Drawable {
         return options.isOpen();
     }
 
-    private void addGroup(PowerGroup group, int baseX, int baseY) {
+    private void addGroup(PowerGroup group) {
         group.addButtons();
         groups.add(group);
     }

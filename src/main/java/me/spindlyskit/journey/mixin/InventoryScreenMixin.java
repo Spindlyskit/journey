@@ -47,6 +47,7 @@ public abstract class InventoryScreenMixin extends AbstractInventoryScreen<Playe
         }
 
         powersMenuButton = addButton(new PowersMenuButton(x, height / 2, (buttonWidget) -> {
+            // Make sure only one widget can be open at a time
             if (recipeBook.isOpen()) {
                 recipeBook.toggleOpen();
             }
@@ -83,6 +84,9 @@ public abstract class InventoryScreenMixin extends AbstractInventoryScreen<Playe
         }
     }
 
+    /**
+     * Capture and store the recipe book toggle so we can reset its position when the inventory moves
+     */
     @Redirect(at = @At(value = "INVOKE", target = "net/minecraft/client/gui/screen/ingame/InventoryScreen.addButton(Lnet/minecraft/client/gui/widget/AbstractButtonWidget;)Lnet/minecraft/client/gui/widget/AbstractButtonWidget;"), method = "init()V")
     private AbstractButtonWidget captureRecipeButton(InventoryScreen inventoryScreen, AbstractButtonWidget button) {
         recipeBookButton = (TexturedButtonWidget) button;
@@ -107,6 +111,9 @@ public abstract class InventoryScreenMixin extends AbstractInventoryScreen<Playe
         }
     }
 
+    /**
+     * Find the left edge of the currently open widget
+     */
     protected int findWidgetLeftEdge() {
         if (powersMenuWidget.isOpen()) {
             return PowersMenuWidget.WIDTH + (width - backgroundWidth) / 2;

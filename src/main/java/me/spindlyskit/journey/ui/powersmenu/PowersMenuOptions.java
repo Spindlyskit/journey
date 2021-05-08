@@ -34,6 +34,9 @@ public class PowersMenuOptions {
         this.tab = tab;
     }
 
+    /**
+     * Store the options on the server
+     */
     @Environment(EnvType.CLIENT)
     protected void sendToServer() {
         CompoundTag tag = new CompoundTag();
@@ -44,15 +47,9 @@ public class PowersMenuOptions {
         ClientPlayNetworking.send(ClientServerChannels.SET_POWERS_MENU_OPTIONS, buf);
     }
 
-    public void sendToClient(ServerPlayerEntity player) {
-        CompoundTag tag = new CompoundTag();
-        serialize(tag);
-
-        PacketByteBuf buf = PacketByteBufs.create();
-        buf.writeCompoundTag(tag);
-        ServerPlayNetworking.send(player, ServerClientChannels.SET_POWERS_MENU_OPTIONS, buf);
-    }
-
+    /**
+     * Store options in a compound tab
+     */
     public CompoundTag serialize(CompoundTag tag) {
         tag.putBoolean("open", isOpen());
         tag.putByte("tab", getTab());
@@ -60,6 +57,9 @@ public class PowersMenuOptions {
         return tag;
     }
 
+    /**
+     * Load options from a compound tag
+     */
     public void deserialize(CompoundTag tag) {
         setOpen(tag.getBoolean("open"));
         setTab(tag.getByte("tab"));
