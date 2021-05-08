@@ -14,6 +14,8 @@ public class PowerGroup extends ToggleButtonWidget {
     protected static final int WIDTH = 35;
     protected static final int HEIGHT = 26;
     protected final int index;
+    private static final int BUTTON_X_OFFSET = 41;
+    private static final int BUTTON_Y_OFFSET = 8;
     protected final List<PowerButton> buttons = Lists.newArrayList();
     protected static final MinecraftClient client = MinecraftClient.getInstance();
 
@@ -45,10 +47,15 @@ public class PowerGroup extends ToggleButtonWidget {
     public void setPos(int baseX, int baseY) {
         this.x = baseX - (isToggled() ? 2 : 0);
         this.y = baseY + (index * (HEIGHT + 1));
+
+        for (int i = 0; i < buttons.size(); i++) {
+            buttons.get(i).setPos(baseX + BUTTON_X_OFFSET, baseY + (i * (PowerButton.BUTTON_SIZE + 2)) + BUTTON_Y_OFFSET);
+        }
     }
 
     @Override
     public void setToggled(boolean toggled) {
+        // Make the active tab's wider texture render correctly
         if (toggled != isToggled()) {
             if (toggled) {
                 x -= 2;
@@ -64,8 +71,9 @@ public class PowerGroup extends ToggleButtonWidget {
      * Create a new power toggle button
      */
     protected void addButton(int x, int y, Power power) {
-        int i = buttons.size() - 1;
-        buttons.add(new PowerButton(x, y - (i * (PowerButton.BUTTON_SIZE + 2)), false, power));
+        int i = buttons.size();
+        buttons.add(new PowerButton(x + BUTTON_X_OFFSET, y + (i * (PowerButton.BUTTON_SIZE + 2)) + BUTTON_Y_OFFSET,
+                false, power));
     }
 
     protected void addButtons(int x, int y) {

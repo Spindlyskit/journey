@@ -42,13 +42,13 @@ public class PowersMenuWidget extends DrawableHelper implements Drawable {
         if (groups.isEmpty()) {
             {
                 PowerGroup group = new PersonalPowersGroup(baseX, baseY, 0, true);
-                group.addButtons(baseX + 41, y + 11);
+                group.addButtons(baseX, baseY);
                 groups.add(group);
             }
 
             for (int i = 1; i < 3; i++) {
                 PowerGroup group = new PowerGroup(baseX, baseY, i, false);
-                group.addButtons(baseX + 41, y + 11);
+                group.addButtons(baseX, baseY);
                 groups.add(group);
             }
         } else {
