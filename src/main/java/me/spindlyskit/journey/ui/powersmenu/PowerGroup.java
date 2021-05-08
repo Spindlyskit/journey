@@ -6,13 +6,15 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.widget.ToggleButtonWidget;
+import net.minecraft.client.util.math.MatrixStack;
 
 import java.util.List;
 
 @Environment(EnvType.CLIENT)
-public class PowerGroup extends ToggleButtonWidget {
+public abstract class PowerGroup extends ToggleButtonWidget {
     protected static final int WIDTH = 35;
     protected static final int HEIGHT = 26;
+    protected static final int ICON_SIZE = 18;
     protected final byte index;
     // X and Y coordinates of the top left of the first tab button before modifications
     protected final int baseX;
@@ -30,6 +32,22 @@ public class PowerGroup extends ToggleButtonWidget {
         this.baseX = baseX;
         this.baseY = baseY;
     }
+
+    @Override
+    public void render(MatrixStack matrices, int mouseX, int mouseY, float delta) {
+        // Render the button
+        super.render(matrices, mouseX, mouseY, delta);
+
+        // Find and render the icon
+        client.getTextureManager().bindTexture(PowersMenuWidget.TEXTURE);
+
+        int iconX = x + ICON_SIZE - 10;
+        int iconY = y + 4;
+        int iconU = 49 + index * ICON_SIZE;
+        int iconV = 55;
+        drawTexture(matrices, iconX, iconY, iconU, iconV, ICON_SIZE, ICON_SIZE);
+    }
+
 
     @Override
     public boolean mouseClicked(double mouseX, double mouseY, int mouseButton) {
@@ -78,6 +96,5 @@ public class PowerGroup extends ToggleButtonWidget {
                 power));
     }
 
-    protected void addButtons(PowersMenuOptions options) {
-    }
+    protected abstract void addButtons(PowersMenuOptions options);
 }
