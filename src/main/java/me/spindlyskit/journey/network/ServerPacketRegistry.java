@@ -10,7 +10,10 @@ public final class ServerPacketRegistry {
 
             server.execute(() -> {
                 for (ServerWorld world : server.getWorlds()) {
-                    world.setTimeOfDay(time);
+                    // Add to the current time so we don't reset local difficulty
+                    int currentTime = (int) world.getTimeOfDay() % 24000;
+                    int toAdd = time - (currentTime > time ? currentTime + 24 : currentTime);
+                    world.setTimeOfDay(world.getTimeOfDay() + toAdd);
                 }
             });
         }));
