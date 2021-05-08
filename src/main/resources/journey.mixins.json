@@ -4,6 +4,7 @@
   "package": "me.spindlyskit.journey.mixin",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
+    "PlayerEntityMixin"
   ],
   "client": [
     "InventoryScreenMixin"

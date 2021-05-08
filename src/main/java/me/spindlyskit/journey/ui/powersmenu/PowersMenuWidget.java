@@ -2,6 +2,7 @@ package me.spindlyskit.journey.ui.powersmenu;
 
 import com.google.common.collect.Lists;
 import com.mojang.blaze3d.systems.RenderSystem;
+import me.spindlyskit.journey.access.PlayerEntityAccess;
 import me.spindlyskit.journey.ui.powersmenu.powergroups.PersonalPowersGroup;
 import me.spindlyskit.journey.ui.powersmenu.powergroups.TimePowersGroup;
 import net.fabricmc.api.EnvType;
@@ -26,14 +27,14 @@ public class PowersMenuWidget extends DrawableHelper implements Drawable {
     protected MinecraftClient client;
     private int x;
     private int y;
-    private boolean open = false;
     private final List<PowerGroup> groups = Lists.newArrayList();
-    private int focusedGroup = 0;
+    private PowersMenuOptions options;
 
     public void initialize(int parentWidth, int parentHeight, MinecraftClient client) {
         this.client = client;
         x = (parentWidth) / 2 - 90;
         y = (parentHeight - HEIGHT - (INVENTORY_HEIGHT - HEIGHT)) / 2;
+        this.options = ((PlayerEntityAccess) client.player).getPowersMenuOptions();
 
         int baseX = x - PowerGroup.WIDTH + 5;
         int baseY = y + 3;
@@ -41,9 +42,11 @@ public class PowersMenuWidget extends DrawableHelper implements Drawable {
         // Create groups if they don't already exist
         // if initialize is called while groups exist (eg. a resize occurred) simply move the old buttons
         if (groups.isEmpty()) {
-            addGroup(new PersonalPowersGroup(baseX, baseY, 0, true), baseX, baseY);
-            addGroup(new TimePowersGroup(baseX, baseY, 1, false), baseX, baseY);
-            addGroup(new PowerGroup(baseX, baseY, 2, false), baseX, baseY);
+            addGroup(new PersonalPowersGroup(baseX, baseY, 0), baseX, baseY);
+            addGroup(new TimePowersGroup(baseX, baseY, 1), baseX, baseY);
+            addGroup(new PowerGroup(baseX, baseY, 2), baseX, baseY);
+
+            groups.get(options.getTab()).setToggled(true);
         } else {
             for (PowerGroup group : groups) {
                 group.setPos(baseX, baseY);
@@ -53,7 +56,7 @@ public class PowersMenuWidget extends DrawableHelper implements Drawable {
 
     @Override
     public void render(MatrixStack matrices, int mouseX, int mouseY, float delta) {
-        if (open) {
+        if (isOpen()) {
             RenderSystem.pushMatrix();
             RenderSystem.translatef(0.0f, 0.0f, 100.0f);
             this.client.getTextureManager().bindTexture(TEXTURE);
@@ -76,10 +79,11 @@ public class PowersMenuWidget extends DrawableHelper implements Drawable {
         if (isOpen()) {
             for (PowerGroup group : groups) {
                 if (group.mouseClicked(mouseX, mouseY, button)) {
-                    if (group.index != focusedGroup) {
+                    if (group.index != options.getTab()) {
                         group.setToggled(true);
-                        groups.get(focusedGroup).setToggled(false);
-                        focusedGroup = group.index;
+                        groups.get(options.getTab()).setToggled(false);
+                        options.setTab(group.index);
+                        options.sendToServer();
                     }
 
                     return true;
@@ -91,11 +95,12 @@ public class PowersMenuWidget extends DrawableHelper implements Drawable {
     }
 
     public void toggleOpen() {
-        open = !open;
+        options.setOpen(!options.isOpen());
+        options.sendToServer();
     }
 
     public boolean isOpen() {
-        return open;
+        return options.isOpen();
     }
 
     private void addGroup(PowerGroup group, int baseX, int baseY) {

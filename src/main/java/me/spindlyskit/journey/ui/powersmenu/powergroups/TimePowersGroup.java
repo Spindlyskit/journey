@@ -4,8 +4,8 @@ import me.spindlyskit.journey.powers.TimeSetPower;
 import me.spindlyskit.journey.ui.powersmenu.PowerGroup;
 
 public class TimePowersGroup extends PowerGroup {
-    public TimePowersGroup(int baseX, int baseY, int index, boolean toggled) {
-        super(baseX, baseY, index, toggled);
+    public TimePowersGroup(int baseX, int baseY, int index) {
+        super(baseX, baseY, index);
     }
 
     @Override

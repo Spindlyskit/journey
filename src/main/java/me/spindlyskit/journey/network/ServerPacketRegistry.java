@@ -1,6 +1,9 @@
 package me.spindlyskit.journey.network;
 
+import me.spindlyskit.journey.access.PlayerEntityAccess;
+import me.spindlyskit.journey.ui.powersmenu.PowersMenuOptions;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.world.ServerWorld;
 
 public final class ServerPacketRegistry {
@@ -17,5 +20,17 @@ public final class ServerPacketRegistry {
                 }
             });
         }));
+
+        ServerPlayNetworking.registerGlobalReceiver(ClientServerChannels.SET_POWERS_MENU_OPTIONS, (((server, player, handler, buf, responseSender) -> {
+            CompoundTag tag = buf.readCompoundTag();
+
+            server.execute(() -> {
+                PowersMenuOptions options = ((PlayerEntityAccess) player).getPowersMenuOptions();
+
+                if (tag != null) {
+                    options.deserialize(tag);
+                }
+            });
+        })));
     }
 }

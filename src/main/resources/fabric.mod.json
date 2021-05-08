@@ -20,6 +20,9 @@
   "entrypoints": {
     "main": [
       "me.spindlyskit.journey.JourneyMod"
+    ],
+    "client": [
+      "me.spindlyskit.journey.JourneyModClient"
     ]
   },
   "mixins": [

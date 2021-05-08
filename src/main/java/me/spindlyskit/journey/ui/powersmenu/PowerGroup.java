@@ -13,7 +13,7 @@ import java.util.List;
 public class PowerGroup extends ToggleButtonWidget {
     protected static final int WIDTH = 35;
     protected static final int HEIGHT = 26;
-    protected final int index;
+    protected final byte index;
     // X and Y coordinates of the top left of the first tab button before modifications
     protected final int baseX;
     protected final int baseY;
@@ -23,16 +23,12 @@ public class PowerGroup extends ToggleButtonWidget {
     protected final List<PowerButton> buttons = Lists.newArrayList();
     protected static final MinecraftClient client = MinecraftClient.getInstance();
 
-    protected PowerGroup(int baseX, int baseY, int index, boolean toggled) {
-        super(baseX, baseY + (index * (HEIGHT + 1)), WIDTH, HEIGHT, toggled);
+    protected PowerGroup(int baseX, int baseY, int index) {
+        super(baseX, baseY + (index * (HEIGHT + 1)), WIDTH, HEIGHT, false);
         setTextureUV(52, 2, 35, 0, PowersMenuWidget.TEXTURE);
-        this.index = index;
+        this.index = (byte) index;
         this.baseX = baseX;
         this.baseY = baseY;
-
-        if (toggled) {
-            x -= 2;
-        }
     }
 
     @Override

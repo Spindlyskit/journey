@@ -39,11 +39,12 @@ public abstract class InventoryScreenMixin extends AbstractInventoryScreen<Playe
 
     @Inject(at = @At("TAIL"), method = "init()V")
     private void init(CallbackInfo ci) {
+        powersMenuWidget.initialize(this.width, this.height, this.client);
+
         if (!recipeBook.isOpen()) {
             x = findWidgetLeftEdge();
             resetRecipeBookButtonPosition();
         }
-        powersMenuWidget.initialize(this.width, this.height, this.client);
 
         powersMenuButton = addButton(new PowersMenuButton(x, height / 2, (buttonWidget) -> {
             if (recipeBook.isOpen()) {
