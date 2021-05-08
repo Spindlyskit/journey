@@ -20,4 +20,14 @@ public class TimeSetPower extends Power {
         buf.writeInt(targetTime);
         ClientPlayNetworking.send(ClientServerChannels.SET_TIME, buf);
     }
+
+    @Override
+    public int getTextureU() {
+        return targetTime / 6000;
+    }
+
+    @Override
+    public int getTextureV() {
+        return 1;
+    }
 }
