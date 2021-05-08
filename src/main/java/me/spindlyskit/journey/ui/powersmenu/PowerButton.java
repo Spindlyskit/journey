@@ -46,12 +46,7 @@ public class PowerButton extends ToggleButtonWidget {
     }
 
     protected void onPress(PlayerEntity player) {
-        if (isToggled()) {
-            power.deactivate(player);
-            setToggled(false);
-        } else {
-            power.use(player);
-            setToggled(power.isToggleable());
-        }
+        setToggled(!isToggled() && power.isToggleable());
+        power.use(player, isToggled());
     }
 }

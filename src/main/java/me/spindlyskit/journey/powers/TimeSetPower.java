@@ -17,7 +17,7 @@ public class TimeSetPower extends Power {
     }
 
     @Override
-    public void use(PlayerEntity player) {
+    public void use(PlayerEntity player, boolean state) {
         PacketByteBuf buf = PacketByteBufs.create();
         buf.writeInt(targetTime);
         ClientPlayNetworking.send(ClientServerChannels.SET_TIME, buf);
