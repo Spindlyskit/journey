@@ -16,6 +16,7 @@ public class PowersMenuOptions {
     private byte tab = 0;
 
     private boolean godmode = false;
+    private boolean noHunger = false;
 
     /**
      * Store the options on the server
@@ -36,7 +37,9 @@ public class PowersMenuOptions {
     public CompoundTag serialize(CompoundTag tag) {
         tag.putBoolean("open", isOpen());
         tag.putByte("tab", getTab());
+
         tag.putBoolean("godmode", isGodmode());
+        tag.putBoolean("hunger", isNoHunger());
 
         return tag;
     }
@@ -47,7 +50,9 @@ public class PowersMenuOptions {
     public void deserialize(CompoundTag tag) {
         setOpen(tag.getBoolean("open"));
         setTab(tag.getByte("tab"));
+
         setGodmode(tag.getBoolean("godmode"));
+        setNoHunger(tag.getBoolean("hunger"));
     }
 
     public boolean isOpen() {
@@ -72,5 +77,13 @@ public class PowersMenuOptions {
 
     public boolean isGodmode() {
         return godmode;
+    }
+
+    public void setNoHunger(boolean noHunger) {
+        this.noHunger = noHunger;
+    }
+
+    public boolean isNoHunger() {
+        return noHunger;
     }
 }

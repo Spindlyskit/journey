@@ -1,6 +1,10 @@
 {
   "power.unnamed.name": "Unnamed power",
-  "power.godmode.name": "God Mode",
+  "power.godmode.disabled.name": "Enable God Mode",
+  "power.godmode.enabled.name": "Disable God Mode",
+  "power.hunger.disabled.name": "Disable Hunger",
+  "power.hunger.enabled.name": "Enable Hunger",
+
   "power.day.name": "Set Time to Dawn",
   "power.noon.name": "Set Time to Noon",
   "power.night.name": "Set Time to Dusk",

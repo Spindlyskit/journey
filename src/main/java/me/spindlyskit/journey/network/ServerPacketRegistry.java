@@ -25,6 +25,10 @@ public final class ServerPacketRegistry {
             ((PlayerEntityAccess) player).getPowersMenuOptions().setGodmode(buf.readBoolean());
         })));
 
+        ServerPlayNetworking.registerGlobalReceiver(ClientServerChannels.SET_NO_HUNGER, ((server, player, handler, buf, responseSender) -> {
+            ((PlayerEntityAccess) player).getPowersMenuOptions().setNoHunger(buf.readBoolean());
+        }));
+
         ServerPlayNetworking.registerGlobalReceiver(ClientServerChannels.SET_POWERS_MENU_OPTIONS, (((server, player, handler, buf, responseSender) -> {
             CompoundTag tag = buf.readCompoundTag();
 

@@ -40,8 +40,14 @@ public class PowerButton extends ToggleButtonWidget {
 
         // Draw power tooltip
         if (client.currentScreen != null && isHovered()) {
-            Text tooltipText = new TranslatableText("power." + power.getName() + ".name");
-            client.currentScreen.renderTooltip(matrices, tooltipText, mouseX, mouseY);
+            String tooltipText = "power." + power.getName();
+
+            if (power.isToggleable()) {
+                tooltipText += power.isToggled() ? ".enabled" : ".disabled";
+            }
+
+            tooltipText += ".name";
+            client.currentScreen.renderTooltip(matrices, new TranslatableText(tooltipText), mouseX, mouseY);
         }
     }
 

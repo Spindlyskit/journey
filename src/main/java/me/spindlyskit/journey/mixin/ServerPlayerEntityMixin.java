@@ -10,6 +10,7 @@ import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(ServerPlayerEntity.class)
@@ -22,6 +23,15 @@ public abstract class ServerPlayerEntityMixin extends PlayerEntity implements Pl
     private void cancelDamageInGodMode(DamageSource damageSource, CallbackInfoReturnable<Boolean> ci) {
         if (getPowersMenuOptions().isGodmode()) {
             ci.setReturnValue(damageSource != DamageSource.OUT_OF_WORLD);
+        }
+    }
+
+    @Inject(at = @At("TAIL"), method = "tick")
+    private void tick(CallbackInfo ci) {
+        ServerPlayerEntity player = (ServerPlayerEntity) (Object) this;
+
+        if (this.getPowersMenuOptions().isNoHunger()) {
+            player.getHungerManager().add(1, 1.0f);
         }
     }
 }
