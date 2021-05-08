@@ -21,6 +21,10 @@ public final class ServerPacketRegistry {
             });
         }));
 
+        ServerPlayNetworking.registerGlobalReceiver(ClientServerChannels.SET_GOD_MODE, (((server, player, handler, buf, responseSender) -> {
+            ((PlayerEntityAccess) player).getPowersMenuOptions().setGodmode(buf.readBoolean());
+        })));
+
         ServerPlayNetworking.registerGlobalReceiver(ClientServerChannels.SET_POWERS_MENU_OPTIONS, (((server, player, handler, buf, responseSender) -> {
             CompoundTag tag = buf.readCompoundTag();
 

@@ -75,9 +75,9 @@ public class PowerGroup extends ToggleButtonWidget {
     protected void addButton(Power power) {
         int i = buttons.size();
         buttons.add(new PowerButton(baseX + BUTTON_X_OFFSET, baseY + (i * (PowerButton.BUTTON_SIZE + 2)) + BUTTON_Y_OFFSET,
-                false, power));
+                power));
     }
 
-    protected void addButtons() {
+    protected void addButtons(PowersMenuOptions options) {
     }
 }

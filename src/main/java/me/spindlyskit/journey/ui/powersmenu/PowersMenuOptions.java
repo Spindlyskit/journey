@@ -1,15 +1,12 @@
 package me.spindlyskit.journey.ui.powersmenu;
 
 import me.spindlyskit.journey.network.ClientServerChannels;
-import me.spindlyskit.journey.network.ServerClientChannels;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
-import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.PacketByteBuf;
-import net.minecraft.server.network.ServerPlayerEntity;
 
 /**
  * Stores data about the powers menu
@@ -18,21 +15,7 @@ public class PowersMenuOptions {
     private boolean open = false;
     private byte tab = 0;
 
-    public boolean isOpen() {
-        return open;
-    }
-
-    public void setOpen(boolean open) {
-        this.open = open;
-    }
-
-    public byte getTab() {
-        return tab;
-    }
-
-    public void setTab(byte tab) {
-        this.tab = tab;
-    }
+    private boolean godmode = false;
 
     /**
      * Store the options on the server
@@ -53,6 +36,7 @@ public class PowersMenuOptions {
     public CompoundTag serialize(CompoundTag tag) {
         tag.putBoolean("open", isOpen());
         tag.putByte("tab", getTab());
+        tag.putBoolean("godmode", isGodmode());
 
         return tag;
     }
@@ -63,5 +47,30 @@ public class PowersMenuOptions {
     public void deserialize(CompoundTag tag) {
         setOpen(tag.getBoolean("open"));
         setTab(tag.getByte("tab"));
+        setGodmode(tag.getBoolean("godmode"));
+    }
+
+    public boolean isOpen() {
+        return open;
+    }
+
+    public void setOpen(boolean open) {
+        this.open = open;
+    }
+
+    public byte getTab() {
+        return tab;
+    }
+
+    public void setTab(byte tab) {
+        this.tab = tab;
+    }
+
+    public void setGodmode(boolean godmode) {
+        this.godmode = godmode;
+    }
+
+    public boolean isGodmode() {
+        return godmode;
     }
 }

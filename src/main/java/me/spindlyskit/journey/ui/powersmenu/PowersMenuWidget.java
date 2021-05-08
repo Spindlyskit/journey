@@ -104,7 +104,7 @@ public class PowersMenuWidget extends DrawableHelper implements Drawable {
     }
 
     private void addGroup(PowerGroup group) {
-        group.addButtons();
+        group.addButtons(options);
         groups.add(group);
     }
 }

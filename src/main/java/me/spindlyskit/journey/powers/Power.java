@@ -16,6 +16,8 @@ public abstract class Power {
         return false;
     }
 
+    public boolean isToggled() { return false; }
+
     /**
      * Get the u offset of the power icon texture (should be multiplied by 16 to find the icon)
      */

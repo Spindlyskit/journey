@@ -2,6 +2,7 @@ package me.spindlyskit.journey.ui.powersmenu.powergroups;
 
 import me.spindlyskit.journey.powers.TimeSetPower;
 import me.spindlyskit.journey.ui.powersmenu.PowerGroup;
+import me.spindlyskit.journey.ui.powersmenu.PowersMenuOptions;
 
 public class TimePowersGroup extends PowerGroup {
     public TimePowersGroup(int baseX, int baseY, int index) {
@@ -9,7 +10,7 @@ public class TimePowersGroup extends PowerGroup {
     }
 
     @Override
-    protected void addButtons() {
+    protected void addButtons(PowersMenuOptions options) {
         // Day
         addButton(new TimeSetPower(1000, "day"));
         // Noon
