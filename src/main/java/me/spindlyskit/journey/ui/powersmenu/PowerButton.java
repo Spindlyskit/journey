@@ -1,13 +1,16 @@
 package me.spindlyskit.journey.ui.powersmenu;
 
+import me.spindlyskit.journey.network.ServerPacketRegistry;
 import me.spindlyskit.journey.powers.Power;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
+import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.widget.ToggleButtonWidget;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.text.Text;
+import net.minecraft.network.PacketByteBuf;
 import net.minecraft.text.TranslatableText;
 
 @Environment(EnvType.CLIENT)
@@ -53,6 +56,10 @@ public class PowerButton extends ToggleButtonWidget {
 
     protected void onPress(PlayerEntity player) {
         setToggled(!isToggled() && power.isToggleable());
-        power.use(player, isToggled());
+
+        PacketByteBuf buf = PacketByteBufs.create();
+        buf.writeEnumConstant(power.getPowerEnum());
+        power.use(buf, player, isToggled());
+        ClientPlayNetworking.send(ServerPacketRegistry.EXECUTE_POWER, buf);
     }
 }

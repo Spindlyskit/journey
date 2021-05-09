@@ -1,10 +1,14 @@
 package me.spindlyskit.journey.powers;
 
-import me.spindlyskit.journey.network.ClientServerChannels;
-import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
-import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.network.PacketByteBuf;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.server.world.ServerWorld;
+
+import java.util.concurrent.ThreadLocalRandom;
 
 public class WeatherSetPower extends Power {
     private final String name;
@@ -16,11 +20,30 @@ public class WeatherSetPower extends Power {
         this.weatherType = weather;
     }
 
+    /**
+     * Handle a weather set on the server
+     */
+    public static void handleServer(MinecraftServer server, ServerPlayerEntity player, WEATHER_TYPE weatherType) {
+        int duration = ThreadLocalRandom.current().nextInt(5000, 11000);
+        ServerWorld overworld = server.getOverworld();
+
+        switch (weatherType) {
+            case Clear:
+                overworld.setWeather(duration, 0, false, false);
+                break;
+            case Rain:
+                overworld.setWeather(0, duration, true, false);
+                break;
+            case Thunder:
+                overworld.setWeather(0, duration, true, true);
+                break;
+        }
+    }
+
     @Override
-    public void use(PlayerEntity player, boolean state) {
-        PacketByteBuf buf = PacketByteBufs.create();
+    @Environment(EnvType.CLIENT)
+    public void use(PacketByteBuf buf, PlayerEntity player, boolean state) {
         buf.writeEnumConstant(weatherType);
-        ClientPlayNetworking.send(ClientServerChannels.SET_WEATHER, buf);
     }
 
     @Override
@@ -44,6 +67,11 @@ public class WeatherSetPower extends Power {
     @Override
     public String getName() {
         return name;
+    }
+
+    @Override
+    public Powers getPowerEnum() {
+        return Powers.WEATHER;
     }
 
     public enum WEATHER_TYPE {

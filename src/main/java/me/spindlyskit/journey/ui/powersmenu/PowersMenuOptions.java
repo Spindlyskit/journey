@@ -1,6 +1,6 @@
 package me.spindlyskit.journey.ui.powersmenu;
 
-import me.spindlyskit.journey.network.ClientServerChannels;
+import me.spindlyskit.journey.network.ServerPacketRegistry;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
@@ -28,7 +28,7 @@ public class PowersMenuOptions {
 
         PacketByteBuf buf = PacketByteBufs.create();
         buf.writeCompoundTag(tag);
-        ClientPlayNetworking.send(ClientServerChannels.SET_POWERS_MENU_OPTIONS, buf);
+        ClientPlayNetworking.send(ServerPacketRegistry.SET_POWERS_MENU_OPTIONS, buf);
     }
 
     /**

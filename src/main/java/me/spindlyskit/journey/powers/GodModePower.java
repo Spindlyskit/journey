@@ -1,11 +1,11 @@
 package me.spindlyskit.journey.powers;
 
-import me.spindlyskit.journey.network.ClientServerChannels;
 import me.spindlyskit.journey.ui.powersmenu.PowersMenuOptions;
-import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
-import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.network.PacketByteBuf;
+import net.minecraft.util.Identifier;
 
 public class GodModePower extends Power {
     private final PowersMenuOptions options;
@@ -16,11 +16,10 @@ public class GodModePower extends Power {
     }
 
     @Override
-    public void use(PlayerEntity player, boolean state) {
+    @Environment(EnvType.CLIENT)
+    public void use(PacketByteBuf buf, PlayerEntity player, boolean state) {
         options.setGodmode(state);
-        PacketByteBuf buf = PacketByteBufs.create();
         buf.writeBoolean(state);
-        ClientPlayNetworking.send(ClientServerChannels.SET_GOD_MODE, buf);
     }
 
     @Override
@@ -31,6 +30,11 @@ public class GodModePower extends Power {
     @Override
     public String getName() {
         return "godmode";
+    }
+
+    @Override
+    public Powers getPowerEnum() {
+        return Powers.GODMODE;
     }
 
     @Override

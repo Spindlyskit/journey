@@ -1,10 +1,12 @@
 package me.spindlyskit.journey.powers;
 
-import me.spindlyskit.journey.network.ClientServerChannels;
-import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
-import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.network.PacketByteBuf;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.server.world.ServerWorld;
 
 public class TimeSetPower extends Power {
     private final int targetTime;
@@ -16,11 +18,22 @@ public class TimeSetPower extends Power {
         this.name = name;
     }
 
+    /**
+     * Handle a time set on the server
+     */
+    public static void handleServer(MinecraftServer server, ServerPlayerEntity player, int time) {
+        for (ServerWorld world : server.getWorlds()) {
+            // Add to the current time so we don't reset local difficulty
+            int currentTime = (int) world.getTimeOfDay() % 24000;
+            int toAdd = time - (currentTime > time ? currentTime + 24 : currentTime);
+            world.setTimeOfDay(world.getTimeOfDay() + toAdd);
+        }
+    }
+
     @Override
-    public void use(PlayerEntity player, boolean state) {
-        PacketByteBuf buf = PacketByteBufs.create();
+    @Environment(EnvType.CLIENT)
+    public void use(PacketByteBuf buf, PlayerEntity player, boolean state) {
         buf.writeInt(targetTime);
-        ClientPlayNetworking.send(ClientServerChannels.SET_TIME, buf);
     }
 
     @Override
@@ -36,5 +49,10 @@ public class TimeSetPower extends Power {
     @Override
     public String getName() {
         return name;
+    }
+
+    @Override
+    public Powers getPowerEnum() {
+        return Powers.TIME;
     }
 }
